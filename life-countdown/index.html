@@ -16,8 +16,10 @@
         }
         .grid-container {
             display: grid;
-            gap: 1px;
+            gap: 2px; /* 2px spacing */
             background-color: #333;
+            grid-auto-flow: column;
+            grid-template-columns: repeat(31, 20px); /* Default to 31 columns */
         }
         .day {
             width: 20px;
@@ -26,7 +28,7 @@
             border: 1px solid #333;
         }
         .filled {
-            background-color: black;
+            background-color: #333; /* Dark gray */
         }
     </style>
 </head>
