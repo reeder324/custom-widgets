@@ -3,31 +3,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date();
     const endDate = new Date('2078-03-24'); // Expected life span of 85 years
 
-    const daysPerRow = 31; // Max number of days in a month
-    const daysPerMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // Days in each month
-
     const gridContainer = document.getElementById('life-grid');
+
+    // Calculate the number of days in each month
+    const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
     let currentDate = new Date(birthDate);
 
-    // Fill grid with days
+    // Create grid cells for each day
     while (currentDate <= endDate) {
         const dayElement = document.createElement('div');
         dayElement.className = 'day';
+
         if (currentDate <= today) {
             dayElement.classList.add('filled');
         }
+
         gridContainer.appendChild(dayElement);
 
         // Move to the next day
         currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    // Adjust grid layout to represent months
+    // Calculate the number of columns needed
     const totalDays = Math.floor((endDate - birthDate) / (1000 * 60 * 60 * 24)) + 1;
-    const totalColumns = Math.max(...daysPerMonth); // Use 31 columns as max for layout
-    const totalRows = Math.ceil(totalDays / totalColumns);
+    const maxDaysInMonth = 31; // Max number of days in a month
 
-    gridContainer.style.gridTemplateColumns = `repeat(${totalColumns}, 20px)`;
+    // Set grid columns based on maximum number of days in a month
+    gridContainer.style.gridTemplateColumns = `repeat(${maxDaysInMonth}, 20px)`;
+
+    // Calculate the number of rows needed
+    const totalRows = Math.ceil(totalDays / maxDaysInMonth);
     gridContainer.style.gridTemplateRows = `repeat(${totalRows}, 20px)`;
 });
